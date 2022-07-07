@@ -9,12 +9,11 @@ class ModelTest(TestCase):
         password = 'testpass123'
         user = get_user_model().objects.create_user(
             email=email,
-            password = password
+            password=password
         )
 
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
-
 
     def test_new_user_email_normalized(self):
         sample_emails = [
@@ -26,8 +25,8 @@ class ModelTest(TestCase):
 
         for email, expected in sample_emails:
             user = get_user_model().objects.create_user(email, 'simple123')
-            
-            self.assertEqual(user.email, expected)        
+
+            self.assertEqual(user.email, expected)
 
     def test_new_user_without_email(self):
         with self.assertRaises(ValueError):

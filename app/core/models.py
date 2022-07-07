@@ -1,6 +1,6 @@
-from pyexpat import model
-from django.db import models  # noqa
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin
 
 
 class UserManager(BaseUserManager):
