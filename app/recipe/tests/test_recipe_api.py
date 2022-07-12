@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from rest_framework import status
-from  rest_framework.test import APIClient
+from rest_framework.test import APIClient
 
 from core.models import Recipe
 from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
@@ -83,7 +83,7 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
-        
+
     def test_get_recipe_detail(self):
         recipe = create_recipe(user=self.user)
 
@@ -92,7 +92,7 @@ class PrivateRecipeApiTests(TestCase):
 
         serializer = RecipeDetailSerializer(recipe)
         self.assertEqual(res.data, serializer.data)
-    
+
     def test_create_recipe(self):
         payload = {
             'title': 'Sample recipe',
@@ -151,7 +151,8 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_update_user_returns_error(self):
-        new_user = create_user(email='user2@example.com', password='test_pswd123')
+        new_user = create_user(email='user2@example.com',
+                               password='test_pswd123')
         recipe = create_recipe(user=self.user)
 
         payload = {'user': new_user.id}
@@ -170,7 +171,8 @@ class PrivateRecipeApiTests(TestCase):
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
     def test_other_users_recipe_error(self):
-        new_user = create_user(email='user2@example.com', password='test_pswd123')
+        new_user = create_user(email='user2@example.com',
+                               password='test_pswd123')
         recipe = create_recipe(user=new_user)
 
         url = detail_url(recipe.id)
@@ -178,4 +180,3 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue(Recipe.objects.filter(id=recipe.id).exists())
-        
