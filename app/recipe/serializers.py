@@ -1,5 +1,3 @@
-from pyexpat import model
-from pkg_resources import require
 from rest_framework import serializers
 
 from core.models import Recipe, Tag, Ingredient
@@ -28,6 +26,11 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'time_minutes',
                   'price', 'link', 'tags', 'ingredients']
         read_only_fields = ['id']
+
+
+class RecipeDetailSerializer(RecipeSerializer):
+    class Meta(RecipeSerializer.Meta):
+        fields = RecipeSerializer.Meta.fields + ['description']
 
     def _get_or_create_tags(self, tags, recipe):
         auth_user = self.context['request'].user
@@ -72,11 +75,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-
-
-class RecipeDetailSerializer(RecipeSerializer):
-    class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description']
 
 
 class RecipeImageSerializer(serializers.ModelSerializer):
