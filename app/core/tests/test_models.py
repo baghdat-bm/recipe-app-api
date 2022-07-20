@@ -4,8 +4,6 @@ Tests for models
 
 from unittest.mock import patch
 from decimal import Decimal
-import uuid
-from venv import create
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
